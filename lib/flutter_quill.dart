@@ -8,7 +8,7 @@ export 'src/common/utils/embeds.dart';
 export 'src/controller/quill_controller.dart';
 export 'src/document/attribute.dart';
 export 'src/document/document.dart';
-export 'src/document/history.dart';
+export 'src/document/history.dart' show HistoryConfig;
 export 'src/document/nodes/block.dart';
 export 'src/document/nodes/embeddable.dart';
 export 'src/document/nodes/leaf.dart';

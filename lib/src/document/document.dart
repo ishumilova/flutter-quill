@@ -24,22 +24,24 @@ import 'style.dart';
 /// The rich text document
 class Document {
   /// Creates new empty document.
-  Document({History? history})
-      : history = history ?? History(),
+  Document({HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
         _delta = Delta()..insert('\n') {
     loadDocument(_delta);
   }
 
   /// Creates new document from provided JSON `data`.
-  Document.fromJson(List data, {History? history})
-      : history = history ?? History(),
+  Document.fromJson(List data,
+      {HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
         _delta = _transform(Delta.fromJson(data)) {
     loadDocument(_delta);
   }
 
   /// Creates new document from provided `delta`.
-  Document.fromDelta(Delta delta, {History? history})
-      : history = history ?? History(),
+  Document.fromDelta(Delta delta,
+      {HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
         _delta = delta {
     loadDocument(delta);
   }
