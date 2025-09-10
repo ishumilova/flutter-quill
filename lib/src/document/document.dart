@@ -24,17 +24,25 @@ import 'style.dart';
 /// The rich text document
 class Document {
   /// Creates new empty document.
-  Document() : _delta = Delta()..insert('\n') {
+  Document({HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
+        _delta = Delta()..insert('\n') {
     loadDocument(_delta);
   }
 
   /// Creates new document from provided JSON `data`.
-  Document.fromJson(List data) : _delta = _transform(Delta.fromJson(data)) {
+  Document.fromJson(List data,
+      {HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
+        _delta = _transform(Delta.fromJson(data)) {
     loadDocument(_delta);
   }
 
   /// Creates new document from provided `delta`.
-  Document.fromDelta(Delta delta) : _delta = delta {
+  Document.fromDelta(Delta delta,
+      {HistoryConfig? historyConfig = const HistoryConfig()})
+      : history = History(config: historyConfig),
+        _delta = delta {
     loadDocument(delta);
   }
 
@@ -67,7 +75,7 @@ class Document {
   final StreamController<DocChange> documentChangeObserver =
       StreamController.broadcast();
 
-  final History history = History();
+  final History history;
 
   /// Stream of [DocChange]s applied to this document.
   Stream<DocChange> get changes => documentChangeObserver.stream;

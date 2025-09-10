@@ -4,13 +4,12 @@ import 'structs/doc_change.dart';
 import 'structs/history_changed.dart';
 
 class History {
-  History({
-    this.ignoreChange = false,
-    this.interval = 400,
-    this.maxStack = 100,
-    this.userOnly = false,
-    this.lastRecorded = 0,
-  });
+  History({config = const HistoryConfig()})
+      : ignoreChange = config.ignoreChange,
+        userOnly = config.userOnly,
+        maxStack = config.maxStack,
+        interval = config.interval,
+        lastRecorded = 0;
 
   HistoryStack stack = HistoryStack.empty();
 
@@ -130,4 +129,25 @@ class HistoryStack {
     undo.clear();
     redo.clear();
   }
+}
+
+class HistoryConfig {
+  const HistoryConfig({
+    this.ignoreChange = false,
+    this.interval = 400,
+    this.maxStack = 100,
+    this.userOnly = false,
+  });
+
+  /// used for disable redo or undo function
+  final bool ignoreChange;
+
+  /// Collaborative editing's conditions should be true
+  final bool userOnly;
+
+  ///max operation count for undo
+  final int maxStack;
+
+  ///record delay
+  final int interval;
 }
